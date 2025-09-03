@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>תצוגת משולש</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header-row">
+        <h1>תצוגת משולש</h1>
+        <a href="./index.html" class="link">&larr; חזרה לעמוד הקלט</a>
+      </header>
+
+      <section class="card">
+        <div class="canvas-wrap">
+          <!-- אזור תצוגה 800x800 -->
+          <svg id="triCanvas" width="800" height="800" viewBox="0 0 800 800" role="img" aria-label="תצוגת משולש">
+            <!-- יצויר דינמית: polygon/lines/labels -->
+          </svg>
+        </div>
+
+        <div class="info">
+          <h3>נקודות</h3>
+          <pre id="pointsSummary">—</pre>
+
+          <h3>זוויות (מעלות)</h3>
+          <ul class="angles">
+            <li>A: <span id="angleA">—</span></li>
+            <li>B: <span id="angleB">—</span></li>
+            <li>C: <span id="angleC">—</span></li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <script src="./js/triangle.js"></script>
+  </body>
+</html>

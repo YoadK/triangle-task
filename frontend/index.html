@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>קלט נקודות משולש</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>קלט נקודות משולש</h1>
+
+      <form id="pointsForm" class="card">
+        <div class="grid-2">
+          <h2>הזן שלוש נקודות (X,Y)</h2>
+
+          <div>
+            <h3>נקודה A</h3>
+            <label for="p1x">X</label>
+            <input id="p1x" name="p1x" type="number" step="any" value="100" required />
+            <label for="p1y">Y</label>
+            <input id="p1y" name="p1y" type="number" step="any" value="100" required />
+          </div>
+
+          <div>
+            <h3>נקודה B</h3>
+            <label for="p2x">X</label>
+            <input id="p2x" name="p2x" type="number" step="any" value="700" required />
+            <label for="p2y">Y</label>
+            <input id="p2y" name="p2y" type="number" step="any" value="100" required />
+          </div>
+
+          <div>
+            <h3>נקודה C</h3>
+            <label for="p3x">X</label>
+            <input id="p3x" name="p3x" type="number" step="any" value="400" required />
+            <label for="p3y">Y</label>
+            <input id="p3y" name="p3y" type="number" step="any" value="700" required />
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary">הצג משולש</button>
+        </div>
+      </form>
+    </main>
+
+    <script src="./js/triangle.js"></script>
+  </body>
+</html>
