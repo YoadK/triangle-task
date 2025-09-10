@@ -18,6 +18,7 @@
         const svg = document.getElementById("triCanvas");
         if (!svg) return; // in index.html the svg holds 'null', so you can't draw anything, thats why we check for it before proceeding
         
+        // read points from query string
         const q = new URLSearchParams(location.search);
         const points = [
             { x: +q.get("p1x") || 0, y: +q.get("p1y") || 0, label: "A" },
@@ -25,9 +26,13 @@
             { x: +q.get("p3x") || 0, y: +q.get("p3y") || 0, label: "C" },
         ];
 
+        // show points summary data (beneath the triangle) 
         updatePointsSummary(points);
+
+        //draw the triangle
         drawTriangle(svg, points);
 
+        //dealing with angles (numbers, labels, arcs)
         const angles = computeAngles(points);
         updateAngles(angles);
         drawAngleLabels(svg, points, angles);
@@ -36,8 +41,9 @@
 
     // show a summary of info about each point
     function updatePointsSummary(points) {
-        const el = document.getElementById("pointsSummary");
-        if (el) el.textContent = points.map(p => `${p.label} = (${p.x}, ${p.y})`).join("\n");
+        const el = document.getElementById("pointsSummary"); // "points-summary" exists only in display.html
+        //converting 'points' array of objects to a string in order to display it
+        if (el) el.textContent = points.map(p => `${p.label} = (${p.x}, ${p.y})`).join("\n"); 
     }
 
     function updateAngles({ A = null, B = null, C = null } = {}) {
@@ -51,7 +57,11 @@
     //draw the triangle itself
     function drawTriangle(svg, points) {
         svg.innerHTML =
+
+        // draws an outline of the triangle
             `<polygon points="${points.map(p => `${p.x},${p.y}`).join(" ")}" fill="none" stroke="#111" stroke-width="2"/>` +
+           
+        // draw points (vertices) and text labels
             points.map(p =>
                 `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#111"/>` +
                 `<text x="${p.x + 8}" y="${p.y - 8}">${p.label}</text>`
@@ -77,7 +87,7 @@
         const B = Math.acos(Math.max(-1, Math.min(1, cosB))) * 180 / Math.PI;
         const C = Math.acos(Math.max(-1, Math.min(1, cosC))) * 180 / Math.PI;
 
-        return { A, B, C };
+        return { A, B, C }; // A,B,C are Angles (numbers) in degrees
     }
 
     // showing the angle values as text inside the triangle near each vertex
