@@ -7,7 +7,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("pointsForm");
         if (form) { // if  "pointsForm" id exists, we are in index.html-> need to get input and redirect to display.html
-                    // else if not, we are in display.html -> need to draw the triangle
+            // else if not, we are in display.html -> need to draw the triangle
             form.addEventListener("submit", (e) => {
                 e.preventDefault(); //prevents form from submitting and reloading the page
                 location.href = `./display.html?${new URLSearchParams(new FormData(form))}`; //redirect user to display.html with query string (form data)
@@ -17,10 +17,10 @@
 
         const svg = document.getElementById("triCanvas");
         if (!svg) return; // in index.html the svg holds 'null', so you can't draw anything, thats why we check for it before proceeding
-        
+
         // read points from query string
         const q = new URLSearchParams(location.search);
-        
+
         const points = [
             { x: +q.get("p1x") || 0, y: +q.get("p1y") || 0, label: "A" },
             { x: +q.get("p2x") || 0, y: +q.get("p2y") || 0, label: "B" },
@@ -39,11 +39,12 @@
         drawAngleArcs(svg, points, angles);
     });
 
-    // show a summary of info about each point (TODO: learn)
+    // show a summary of info about each point 
+    // displays : A = (100, 100) and all other points, in the summary section below the triangle
     function updatePointsSummary(points) {
         const el = document.getElementById("pointsSummary"); // "points-summary" exists only in display.html
         //converting 'points' array of objects to a string in order to display it
-        if (el) el.textContent = points.map(p => `${p.label} = (${p.x}, ${p.y})`).join("\n"); 
+        if (el) el.textContent = points.map(p => `${p.label} = (${p.x}, ${p.y})`).join("\n");
     }
 
     //updating angles info at the bottom of the page
@@ -52,7 +53,11 @@
             const el = document.getElementById(id);
             if (el) el.textContent = v != null ? v.toFixed(2) : "—";
         };
-        //TODO: learn 'set' , create proper value to this specific key (a,b,c are keys)
+        
+        //html properties:
+        //name = key
+        //value = value
+        //  'set' , create proper value to the specific key e.g "angleA" (angleA,angleB,angleC are keys)
         set("angleA", A); set("angleB", B); set("angleC", C);
     }
 
@@ -60,10 +65,10 @@
     function drawTriangle(svg, points) {
         svg.innerHTML =
 
-        // draws an outline of the triangle
+            // draws an outline of the triangle
             `<polygon points="${points.map(p => `${p.x},${p.y}`).join(" ")}" fill="none" stroke="#111" stroke-width="2"/>` +
-           
-        // draw points (vertices) and text labels
+
+            // draw points (vertices) and text labels
             points.map(p =>
                 `<circle cx="${p.x}" cy="${p.y}" r="4" fill="#111"/>` +
                 `<text x="${p.x + 8}" y="${p.y - 8}">${p.label}</text>`
