@@ -10,7 +10,7 @@
                     // else if not, we are in display.html -> need to draw the triangle
             form.addEventListener("submit", (e) => {
                 e.preventDefault(); //prevents form from submitting and reloading the page
-                location.href = `./display.html?${new URLSearchParams(new FormData(form))}`;
+                location.href = `./display.html?${new URLSearchParams(new FormData(form))}`; //redirect user to display.html with query string (form data)
             });
             return;
         }
@@ -20,12 +20,12 @@
         
         // read points from query string
         const q = new URLSearchParams(location.search);
+        
         const points = [
             { x: +q.get("p1x") || 0, y: +q.get("p1y") || 0, label: "A" },
             { x: +q.get("p2x") || 0, y: +q.get("p2y") || 0, label: "B" },
             { x: +q.get("p3x") || 0, y: +q.get("p3y") || 0, label: "C" },
         ];
-
         // show points summary data (beneath the triangle) 
         updatePointsSummary(points);
 
@@ -34,23 +34,25 @@
 
         //dealing with angles (numbers, labels, arcs)
         const angles = computeAngles(points);
-        updateAngles(angles);
-        drawAngleLabels(svg, points, angles);
+        updateAngles(angles); // //updating angles info at the bottom of the page
+        drawAngleLabels(svg, points, angles); //// showing the angle values as text inside the triangle near each vertex
         drawAngleArcs(svg, points, angles);
     });
 
-    // show a summary of info about each point
+    // show a summary of info about each point (TODO: learn)
     function updatePointsSummary(points) {
         const el = document.getElementById("pointsSummary"); // "points-summary" exists only in display.html
         //converting 'points' array of objects to a string in order to display it
         if (el) el.textContent = points.map(p => `${p.label} = (${p.x}, ${p.y})`).join("\n"); 
     }
 
+    //updating angles info at the bottom of the page
     function updateAngles({ A = null, B = null, C = null } = {}) {
         const set = (id, v) => {
             const el = document.getElementById(id);
             if (el) el.textContent = v != null ? v.toFixed(2) : "—";
         };
+        //TODO: learn 'set' , create proper value to this specific key (a,b,c are keys)
         set("angleA", A); set("angleB", B); set("angleC", C);
     }
 
@@ -99,6 +101,7 @@
             { x: C.x - 0, y: C.y - 25, angle: angles.C.toFixed(1) }
         ];
 
+        //item.x, itemy are coordinates for the angles inside the triangle
         angleTexts.forEach(item => {
             svg.innerHTML += `<text x="${item.x}" y="${item.y}" fill="red" font-size="12" text-anchor="middle">${item.angle}</text>`;
         });
