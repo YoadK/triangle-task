@@ -1,17 +1,23 @@
+// triangle.js listens for form submission in index.html, then draws the triangle using query params taken form input fields 
+// then draws triangle while compute angles in display.html
+// in index.html is builds a form data query string and redirects to display.html
+// in display.html it reads the query string, draws the triangle, computes angles and displays them, including arcs and labels
+
 (() => {
     document.addEventListener("DOMContentLoaded", () => {
         const form = document.getElementById("pointsForm");
-        if (form) {
+        if (form) { // if  "pointsForm" id exists, we are in index.html-> need to get input and redirect to display.html
+                    // else if not, we are in display.html -> need to draw the triangle
             form.addEventListener("submit", (e) => {
-                e.preventDefault();
+                e.preventDefault(); //prevents form from submitting and reloading the page
                 location.href = `./display.html?${new URLSearchParams(new FormData(form))}`;
             });
             return;
         }
 
         const svg = document.getElementById("triCanvas");
-        if (!svg) return;
-
+        if (!svg) return; // in index.html the svg holds 'null', so you can't draw anything, thats why we check for it before proceeding
+        
         const q = new URLSearchParams(location.search);
         const points = [
             { x: +q.get("p1x") || 0, y: +q.get("p1y") || 0, label: "A" },
@@ -78,9 +84,9 @@
     function drawAngleLabels(svg, points, angles) {
         const [A, B, C] = points;
         const angleTexts = [
-            { x: A.x + 20, y: A.y + 15, angle: angles.A.toFixed(1) },
-            { x: B.x - 20, y: B.y + 15, angle: angles.B.toFixed(1) },
-            { x: C.x, y: C.y - 15, angle: angles.C.toFixed(1) }
+            { x: A.x + 32, y: A.y + 20, angle: angles.A.toFixed(1) },
+            { x: B.x - 30, y: B.y + 20, angle: angles.B.toFixed(1) },
+            { x: C.x - 0, y: C.y - 25, angle: angles.C.toFixed(1) }
         ];
 
         angleTexts.forEach(item => {
